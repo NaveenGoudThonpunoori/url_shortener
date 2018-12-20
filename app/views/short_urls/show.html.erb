@@ -6,6 +6,6 @@
 </p>
 <p>
   <strong>Short Url:</strong>
-  <%= link_to "http://localhost:9999/#{@short_url.short}", short_url_path(@short_url.short, redirect: true) , target: "_blank"%>
+  <%= link_to "http://localhost:9000/#{@short_url.short}", main_web_path(@short_url.short) , target: "_blank"%>
 </p>
 <%= link_to 'Back', short_urls_path %>

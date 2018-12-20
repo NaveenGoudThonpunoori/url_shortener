@@ -10,13 +10,13 @@ class ShortUrlsController < ApplicationController
   # GET /short_urls/1
   # GET /short_urls/1.json
   def show
-    if params["redirect"].present?
-      @short_url =  ShortUrl.find_by(short: params[:id])
+    @short_url =  ShortUrl.find(params[:id])
+  end
 
-      redirect_to "#{get_sanity_url(@short_url.original).join('/')}"
-    else
-      @short_url =  ShortUrl.find(params[:id])
-    end
+  def redirect_to_main_web
+    @short_url =  ShortUrl.find_by(short: params[:id])
+
+    redirect_to "#{get_sanity_url(@short_url.original).join('/')}"
   end
 
   # GET /short_urls/new
