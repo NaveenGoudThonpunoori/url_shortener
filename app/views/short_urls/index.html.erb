@@ -14,7 +14,7 @@
   <tbody>
     <% @short_urls.each do |short_url| %>
       <tr>
-        <td><%= short_url.original %></td>
+        <td><%= "http://#{short_url.original}" %></td>
         <td>  <%= link_to "http://localhost:9000/#{short_url.short}", main_web_path(short_url.short) , target: "_blank"%></td>
         <td><%= link_to 'Show', short_url %></td>
         <td><%= link_to 'Destroy', short_url, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -24,5 +24,6 @@
 </table>
 
 <br>
+<%= link_to 'Down load CSV', short_urls_path(format: 'csv') %>
 
 <%= link_to 'New Short Url', new_short_url_path %>

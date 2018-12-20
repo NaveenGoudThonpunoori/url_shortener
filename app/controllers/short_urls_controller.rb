@@ -1,10 +1,27 @@
+require 'csv'
 class ShortUrlsController < ApplicationController
   before_action :set_short_url, only: [:edit, :update, :destroy]
-
   # GET /short_urls
   # GET /short_urls.json
+
   def index
-    @short_urls = ShortUrl.all
+    respond_to do |format|
+      format.html {
+        @short_urls = ShortUrl.all
+      }
+      format.csv {
+        @file_path = File.join Rails.root, 'public', 'system', 'short_urls'
+        FileUtils.mkdir_p(@file_path) unless File.exist?(@file_path)
+        @file_path = @file_path + "short_urls_#{Date.today}.csv"
+        CSV.open(@file_path, "w") do |csv|
+          csv << %w{original_url short_url}
+          ShortUrl.all.each do |url|
+            csv << ["http://#{url.original}", url.short]
+          end
+        end
+        send_file @file_path
+      }
+    end
   end
 
   # GET /short_urls/1
